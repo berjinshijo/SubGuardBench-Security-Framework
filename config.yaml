@@ -1,0 +1,34 @@
+# Edit these names to match the real SubGuardBench files/columns.
+data:
+  input_path: data/raw/subguardbench.csv
+  timestamp_col: timestamp
+  label_col: label
+  entity_col: device_id
+  relation_col: interaction_type
+  text_col: agent_text
+  categorical_cols: [protocol, event_type, device_type, operation]
+  numeric_cols: [voltage, current, frequency, power, packet_count, packet_bytes]
+  # Optional: separate input files can be merged in stage 1 after timestamp alignment.
+  timestamp_tolerance_seconds: 5
+
+preprocessing:
+  test_fraction: 0.20
+  validation_fraction: 0.10
+  top_k_features: 100
+  text_features: 128
+  sequence_length: 8
+
+model:
+  hidden_dim: 64
+  low_rank: 16
+  epochs: 20
+  batch_size: 256
+  learning_rate: 0.001
+
+rl:
+  episodes: 100
+  max_steps: 200
+  seed: 42
+
+evaluation:
+  output_dir: results
